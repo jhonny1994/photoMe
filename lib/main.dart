@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/loading_screen.dart';
-import 'package:photome/core/providers.dart';
-import 'package:photome/core/test_screen.dart';
+import 'package:photome/core/error_screen.dart';
 import 'package:photome/features/auth/presentation/onboarding_screen.dart';
 import 'package:photome/features/auth/presentation/sign_up_screen.dart';
 import 'package:photome/features/auth/presentation/verification_screen.dart';
+import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/presentation/posts_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -44,7 +44,7 @@ class _MainAppState extends ConsumerState<MainApp> {
   Widget build(BuildContext context) {
     final state = ref.watch(authNotifierProvider).when(
           authenticated: () => const PostsScreen(),
-          failure: (message) => TestScreen(message: 'failure $message'),
+          failure: (message) => ErrorScreen(message: 'failure $message'),
           loading: () => const LoadingScreen(),
           unauthenticated: () => const SignUpScreen(),
           onboarding: () => const OnboardingScreen(),

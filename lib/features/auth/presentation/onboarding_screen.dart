@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/providers.dart';
 import 'package:photome/features/auth/domain/onboarding_model.dart';
+import 'package:photome/features/auth/providers.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});

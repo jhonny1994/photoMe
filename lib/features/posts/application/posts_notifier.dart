@@ -1,42 +1,51 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/features/posts/domain/like.dart';
-import 'package:photome/features/posts/domain/post.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:io';
 
-class PostsNotifier extends StateNotifier<AsyncValue<List<Post>>> {
-  PostsNotifier(this.client) : super(const AsyncValue.loading()) {
-    getPosts();
+import 'package:dartz/dartz.dart';
+import 'package:photome/features/posts/domain/post.dart';
+import 'package:photome/features/posts/infurastructure/post_repository.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+part 'posts_notifier.g.dart';
+
+@riverpod
+class PostNotifier extends _$PostNotifier {
+  @override
+  Future<List<Post>> build() {
+    _initPostsChannel();
+    return ref.read(postRepositoryProvider).getPosts();
   }
 
-  final SupabaseClient client;
+  Future<Either<String, void>> addPost(Post post) async {
+    return ref.read(postRepositoryProvider).addPost(post);
+  }
 
-  Future<void> getPosts() async {
-    state = const AsyncValue.loading();
+  Future<Either<String, void>> deletePost(int id) async {
+    return ref.read(postRepositoryProvider).deletePost(id);
+  }
 
-    final postsQuery = await client
-        .from('posts')
-        .select<List<Map<String, dynamic>>>(
-          'id, caption, created_at, image_url, profiles (id, username, profile_image)',
-        )
-        .order('created_at');
+  Future<Either<String, void>> updatePost(Post post) async {
+    return ref.read(postRepositoryProvider).updatePost(post);
+  }
 
-    final likesQuery = await client
-        .from('likes')
-        .select<List<Map<String, dynamic>>>(
-          'id, created_at, post_id, profile_id',
-        )
-        .order('created_at');
+  Future<Either<String, String>> uploadImage(File image, String userId) async {
+    return ref.read(postRepositoryProvider).uploadImage(image, userId);
+  }
 
-    final likes = likesQuery.map(Like.fromMap).toList();
-
-    final posts = postsQuery
-        .map(
-          (e) => Post.fromMap(e)
-            ..likes =
-                likes.where((element) => element.postId == e['id']).toList(),
-        )
-        .toList();
-
-    state = AsyncValue.data(posts);
+  void _initPostsChannel() {
+    ref.read(postRepositoryProvider).postsChannel.on(
+      RealtimeListenTypes.postgresChanges,
+      ChannelFilter(
+        event: '*',
+        schema: 'public',
+        table: 'posts',
+      ),
+      (payload, [_]) async {
+        if (['INSERT', 'UPDATE', 'DELETE'].contains(payload['eventType'])) {
+          state = await AsyncValue.guard(
+            () async => ref.read(postRepositoryProvider).getPosts(),
+          );
+        }
+      },
+    ).subscribe();
   }
 }

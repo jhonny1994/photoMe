@@ -1,14 +1,13 @@
-import 'package:photome/features/posts/domain/like.dart';
 import 'package:photome/features/posts/domain/profile.dart';
 
 class Post {
   Post({
     required this.caption,
-    required this.createdAt,
-    required this.id,
     required this.imageUrl,
-    required this.likes,
-    required this.profile,
+    required this.profileId,
+    this.createdAt,
+    this.id,
+    this.profile,
   });
 
   factory Post.fromMap(Map<String, dynamic> map) {
@@ -17,46 +16,41 @@ class Post {
       createdAt: DateTime.parse(map['created_at'] as String),
       id: map['id'] as int,
       imageUrl: map['image_url'] as String,
-      likes: map['likes'] as List<Like>? ?? [],
       profile: Profile.fromMap(map['profiles'] as Map<String, dynamic>),
+      profileId: Profile.fromMap(map['profiles'] as Map<String, dynamic>).id,
     );
   }
 
   final String caption;
-  final DateTime createdAt;
-  final int id;
+  DateTime? createdAt;
+  int? id;
   final String imageUrl;
-  List<Like> likes = [];
-  final Profile profile;
-
-  bool isLiked() => likes.any((element) => element.profileId == profile.id);
+  Profile? profile;
+  final String profileId;
 
   Post copyWith({
     String? caption,
     DateTime? createdAt,
     int? id,
     String? imageUrl,
-    List<Like>? likes,
     Profile? profile,
+    String? profileId,
   }) {
     return Post(
       caption: caption ?? this.caption,
       createdAt: createdAt ?? this.createdAt,
       id: id ?? this.id,
       imageUrl: imageUrl ?? this.imageUrl,
-      likes: likes ?? this.likes,
       profile: profile ?? this.profile,
+      profileId: profileId ?? this.profileId,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'caption': caption,
-      'created_at': createdAt,
-      'id': id,
       'image_url': imageUrl,
-      'likes': likes,
-      'profiles': profile.toMap(),
+      'profile_id': profileId,
     };
   }
 }

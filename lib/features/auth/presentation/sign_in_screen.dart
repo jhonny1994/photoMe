@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/providers.dart';
 import 'package:photome/features/auth/presentation/sign_up_screen.dart';
+import 'package:photome/features/auth/providers.dart';
 import 'package:photome/main.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {

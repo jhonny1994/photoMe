@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/providers.dart';
 import 'package:photome/features/auth/infurastructure/auth_state.dart';
+import 'package:photome/features/auth/providers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AuthNotifier extends StateNotifier<AuthState> {
@@ -61,7 +62,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> toggleBoarding() async {
     state = const AuthState.loading();
-    final prefs = await ref.read(sharedPrefrencesProvider.future);
+    final prefs = await ref.read(prefsProvider.future);
     await prefs.setBool('isBoarded', true);
     state = const AuthState.unauthenticated();
   }
