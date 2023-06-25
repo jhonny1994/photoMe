@@ -13,7 +13,7 @@
     <a href="https://github.com/jhonny1994/photoMe/issues">Request Feature</a>
     <br/>
     <br/>
-    <a href="https://drive.proton.me/urls/8G17DWS6E4#P702bDsfbOkY">Download APK</a>
+    <a href="https://drive.proton.me/urls/1DKSNJEHZW#tQjmoHJg8VYn">Download APK</a>
   </p>
 </p>
 
