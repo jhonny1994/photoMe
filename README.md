@@ -21,7 +21,14 @@
 
 ## Screenshots
 
-<img src="https://i.ibb.co/VHjkFN9/1.png" alt="project-screenshot"> <img src="https://i.ibb.co/74XbYD8/2.png" alt="project-screenshot"> <img src="https://i.ibb.co/JQSVr3Q/3.png" alt="project-screenshot"> <img src="https://i.ibb.co/f0XjNW3/4.png" alt="project-screenshot">
+<table>
+  <tr>
+    <td><img src="https://i.ibb.co/VHjkFN9/1.png" alt="project-screenshot"></td>
+    <td><img src="https://i.ibb.co/74XbYD8/2.png" alt="project-screenshot"></td>
+    <td><img src="https://i.ibb.co/JQSVr3Q/3.png" alt="project-screenshot"></td>
+    <td><img src="https://i.ibb.co/f0XjNW3/4.png" alt="project-screenshot"></td>
+  </tr>
+ </table>
 
 ## About The Project
 
