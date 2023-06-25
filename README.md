@@ -21,7 +21,7 @@
 
 ## Screenshots
 
-<img src="https://i.ibb.co/VHjkFN9/1.png" alt="project-screenshot" height="400"> <img src="https://i.ibb.co/74XbYD8/2.png" alt="project-screenshot" height="400"> <img src="https://i.ibb.co/JQSVr3Q/3.png" alt="project-screenshot" height="400"> <img src="https://i.ibb.co/f0XjNW3/4.png" alt="project-screenshot" height="400">
+<img src="https://i.ibb.co/VHjkFN9/1.png" alt="project-screenshot"> <img src="https://i.ibb.co/74XbYD8/2.png" alt="project-screenshot"> <img src="https://i.ibb.co/JQSVr3Q/3.png" alt="project-screenshot"> <img src="https://i.ibb.co/f0XjNW3/4.png" alt="project-screenshot">
 
 ## About The Project
 
