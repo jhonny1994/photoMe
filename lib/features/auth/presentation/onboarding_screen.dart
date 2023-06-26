@@ -13,22 +13,22 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final List<OnboardingPageModel> pages = [
     OnboardingPageModel(
-      title: 'Est numquam omnis repudiandae.',
+      title: 'Share your beautiful photos.',
       description:
           'Facilis quo maxime sed. Recusandae at consequatur. Possimus quia voluptate. Porro est nesciunt perspiciatis aut amet qui et et aut.',
-      image: 'assets/images/1.jpg',
+      image: 'assets/images/undraw_Live_photo_re_4khn.png',
     ),
     OnboardingPageModel(
-      title: 'Qui neque ullam quae.',
+      title: 'Interact with your feed.',
       description:
           'Magnam et distinctio porro. Doloremque enim ut molestiae labore corporis consequatur enim. Qui saepe assumenda error omnis consequuntur aut velit. Nihil consequuntur animi cupiditate est.',
-      image: 'assets/images/2.jpg',
+      image: 'assets/images/undraw_Social_influencer_re_beim.png',
     ),
     OnboardingPageModel(
-      title: 'Asperiores aut dolor.',
+      title: 'Get together with your friends and have fun.',
       description:
           'Reprehenderit quia amet dolor quia reiciendis dolor quo voluptatem. A tempore qui placeat illum sed architecto similique. Maxime rerum nobis in est.',
-      image: 'assets/images/3.jpg',
+      image: 'assets/images/undraw_Work_chat_re_qes4.png',
     ),
   ];
 

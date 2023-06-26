@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/domain/post.dart';
-import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/edit_post_screen.dart';
 
 class ActionsRow extends ConsumerWidget {
@@ -50,7 +49,7 @@ class ActionsRow extends ConsumerWidget {
               onPressed: () async {
                 final operation = await ref
                     .read(postNotifierProvider.notifier)
-                    .deletePost(post.id!);
+                    .deletePost(post.id!, post.imageUrl);
                 operation.fold(
                   (l) => ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

@@ -115,7 +115,12 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                             borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(
                               image: CachedNetworkImageProvider(
-                                '${ref.read(supabaseClientProvider).storageUrl}/object/public/${post.imageUrl}',
+                                ref.read(
+                                  imageUrlProvider(
+                                    userId: post.profileId,
+                                    fileName: post.imageUrl,
+                                  ),
+                                ),
                               ),
                             ),
                           ),

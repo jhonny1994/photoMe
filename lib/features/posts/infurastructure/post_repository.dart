@@ -41,20 +41,10 @@ class PostRepository {
     }
   }
 
-  Future<Either<String, String>> uploadImage(File image, String userId) async {
+  Future<Either<String, void>> deletePost(int postId, String imageUrl) async {
     try {
-      final path =
-          '$userId/${generateRandomString(10)}${extension(image.path)}';
-      final upload = await client.storage.from('posts').upload(path, image);
-      return right(upload);
-    } catch (e) {
-      return left(e.toString());
-    }
-  }
-
-  Future<Either<String, void>> deletePost(int id) async {
-    try {
-      await client.from('posts').delete().match({'id': id});
+      await client.from('posts').delete().match({'id': postId});
+      await deleteImage(imageUrl);
       return right(null);
     } catch (e) {
       return left(e.toString());
@@ -73,4 +63,18 @@ class PostRepository {
       return left(e.toString());
     }
   }
+
+  Future<Either<String, String>> uploadImage(File image, String userId) async {
+    try {
+      final path =
+          '$userId/${generateRandomString(20)}${extension(image.path)}';
+      final upload = await client.storage.from('posts').upload(path, image);
+      return right(upload);
+    } catch (e) {
+      return left(e.toString());
+    }
+  }
+
+  Future<void> deleteImage(String imageUrl) =>
+      client.storage.from('posts').remove([imageUrl.substring(6)]);
 }

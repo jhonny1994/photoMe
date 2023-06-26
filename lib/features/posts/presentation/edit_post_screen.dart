@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:photome/core/providers.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
@@ -63,9 +61,7 @@ class _EditPostScreenState extends ConsumerState<EditPostScreen> {
                           );
                       uploadJob.fold(
                         (l) => ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(l),
-                          ),
+                          SnackBar(content: Text(l)),
                         ),
                         (r) async {
                           final post = Post(
@@ -79,10 +75,11 @@ class _EditPostScreenState extends ConsumerState<EditPostScreen> {
                               .updatePost(post);
                           action.fold(
                               (l) => ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(l),
-                                    ),
+                                    SnackBar(content: Text(l)),
                                   ), (r) {
+                            ref
+                                .read(postNotifierProvider.notifier)
+                                .deleteImage(widget.post.imageUrl);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Post was edited successfully'),
@@ -103,9 +100,7 @@ class _EditPostScreenState extends ConsumerState<EditPostScreen> {
                           .updatePost(post);
                       action.fold(
                           (l) => ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(l),
-                                ),
+                                SnackBar(content: Text(l)),
                               ), (r) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -148,7 +143,12 @@ class _EditPostScreenState extends ConsumerState<EditPostScreen> {
                                     )
                                   : DecorationImage(
                                       image: NetworkImage(
-                                        '${ref.read(supabaseClientProvider).storageUrl}/object/public/${widget.post.imageUrl}',
+                                        ref.read(
+                                          imageUrlProvider(
+                                            userId: widget.post.profileId,
+                                            fileName: widget.post.imageUrl,
+                                          ),
+                                        ),
                                       ),
                                     ),
                             ),

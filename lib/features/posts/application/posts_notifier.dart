@@ -9,18 +9,12 @@ part 'posts_notifier.g.dart';
 
 @riverpod
 class PostNotifier extends _$PostNotifier {
-  @override
-  Future<List<Post>> build() {
-    _initPostsChannel();
-    return ref.read(postRepositoryProvider).getPosts();
-  }
-
   Future<Either<String, void>> addPost(Post post) async {
     return ref.read(postRepositoryProvider).addPost(post);
   }
 
-  Future<Either<String, void>> deletePost(int id) async {
-    return ref.read(postRepositoryProvider).deletePost(id);
+  Future<Either<String, void>> deletePost(int postId, String imageUrl) async {
+    return ref.read(postRepositoryProvider).deletePost(postId, imageUrl);
   }
 
   Future<Either<String, void>> updatePost(Post post) async {
@@ -29,6 +23,10 @@ class PostNotifier extends _$PostNotifier {
 
   Future<Either<String, String>> uploadImage(File image, String userId) async {
     return ref.read(postRepositoryProvider).uploadImage(image, userId);
+  }
+
+  Future<void> deleteImage(String imageUrl) async {
+    return ref.read(postRepositoryProvider).deleteImage(imageUrl);
   }
 
   void _initPostsChannel() {
@@ -47,5 +45,11 @@ class PostNotifier extends _$PostNotifier {
         }
       },
     ).subscribe();
+  }
+
+  @override
+  Future<List<Post>> build() {
+    _initPostsChannel();
+    return ref.read(postRepositoryProvider).getPosts();
   }
 }
