@@ -1,17 +1,10 @@
-// ignore_for_file: avoid_redundant_argument_values
+import 'dart:async';
 
 import 'package:device_preview_screenshot/device_preview_screenshot.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/error_screen.dart';
-import 'package:photome/core/loading_screen.dart';
-import 'package:photome/features/auth/presentation/onboarding_screen.dart';
-import 'package:photome/features/auth/presentation/sign_up_screen.dart';
-import 'package:photome/features/auth/presentation/verification_screen.dart';
-import 'package:photome/features/auth/providers.dart';
-import 'package:photome/features/posts/presentation/posts_screen.dart';
+import 'package:photome/core/shared/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -29,7 +22,6 @@ Future<void> main() async {
           ...DevicePreview.defaultTools,
           DevicePreviewScreenshot(),
         ],
-        enabled: !kReleaseMode,
         builder: (context) => const MainApp(),
       ),
     ),
@@ -46,15 +38,7 @@ class MainApp extends ConsumerStatefulWidget {
 class _MainAppState extends ConsumerState<MainApp> {
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(authNotifierProvider).when(
-          authenticated: () => const PostsScreen(),
-          failure: (message) => ErrorScreen(message: 'failure $message'),
-          loading: () => const LoadingScreen(),
-          unauthenticated: () => const SignUpScreen(),
-          onboarding: () => const OnboardingScreen(),
-          verification: VerificationScreen.new,
-        );
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Photome',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -67,7 +51,7 @@ class _MainAppState extends ConsumerState<MainApp> {
           ),
         ),
       ),
-      home: state,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

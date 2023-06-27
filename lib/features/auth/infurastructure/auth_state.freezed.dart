@@ -22,7 +22,7 @@ mixin _$AuthState {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) =>
@@ -33,7 +33,7 @@ mixin _$AuthState {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) =>
@@ -44,7 +44,7 @@ mixin _$AuthState {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
@@ -142,7 +142,7 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
@@ -156,7 +156,7 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
@@ -170,7 +170,7 @@ class _$_Authenticated implements _Authenticated {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
@@ -296,7 +296,7 @@ class _$_Failure implements _Failure {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
@@ -310,7 +310,7 @@ class _$_Failure implements _Failure {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
@@ -324,7 +324,7 @@ class _$_Failure implements _Failure {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
@@ -429,7 +429,7 @@ class _$_Loading implements _Loading {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
@@ -443,7 +443,7 @@ class _$_Loading implements _Loading {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
@@ -457,7 +457,7 @@ class _$_Loading implements _Loading {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
@@ -558,7 +558,7 @@ class _$_Onboarding implements _Onboarding {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
@@ -572,7 +572,7 @@ class _$_Onboarding implements _Onboarding {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
@@ -586,7 +586,7 @@ class _$_Onboarding implements _Onboarding {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
@@ -650,6 +650,8 @@ abstract class _$$_UnauthenticatedCopyWith<$Res> {
   factory _$$_UnauthenticatedCopyWith(
           _$_Unauthenticated value, $Res Function(_$_Unauthenticated) then) =
       __$$_UnauthenticatedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isSignUp});
 }
 
 /// @nodoc
@@ -659,26 +661,51 @@ class __$$_UnauthenticatedCopyWithImpl<$Res>
   __$$_UnauthenticatedCopyWithImpl(
       _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isSignUp = null,
+  }) {
+    return _then(_$_Unauthenticated(
+      isSignUp: null == isSignUp
+          ? _value.isSignUp
+          : isSignUp // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Unauthenticated implements _Unauthenticated {
-  const _$_Unauthenticated();
+  const _$_Unauthenticated({required this.isSignUp});
+
+  @override
+  final bool isSignUp;
 
   @override
   String toString() {
-    return 'AuthState.unauthenticated()';
+    return 'AuthState.unauthenticated(isSignUp: $isSignUp)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Unauthenticated);
+        (other.runtimeType == runtimeType &&
+            other is _$_Unauthenticated &&
+            (identical(other.isSignUp, isSignUp) ||
+                other.isSignUp == isSignUp));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isSignUp);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
+      __$$_UnauthenticatedCopyWithImpl<_$_Unauthenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -687,11 +714,11 @@ class _$_Unauthenticated implements _Unauthenticated {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
-    return unauthenticated();
+    return unauthenticated(isSignUp);
   }
 
   @override
@@ -701,11 +728,11 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
-    return unauthenticated?.call();
+    return unauthenticated?.call(isSignUp);
   }
 
   @override
@@ -715,13 +742,13 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
-      return unauthenticated();
+      return unauthenticated(isSignUp);
     }
     return orElse();
   }
@@ -771,7 +798,13 @@ class _$_Unauthenticated implements _Unauthenticated {
 }
 
 abstract class _Unauthenticated implements AuthState {
-  const factory _Unauthenticated() = _$_Unauthenticated;
+  const factory _Unauthenticated({required final bool isSignUp}) =
+      _$_Unauthenticated;
+
+  bool get isSignUp;
+  @JsonKey(ignore: true)
+  _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -860,7 +893,7 @@ class _$_Verification implements _Verification {
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function() unauthenticated,
+    required TResult Function(bool isSignUp) unauthenticated,
     required TResult Function(String email, String password, String username)
         verification,
   }) {
@@ -874,7 +907,7 @@ class _$_Verification implements _Verification {
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function()? unauthenticated,
+    TResult? Function(bool isSignUp)? unauthenticated,
     TResult? Function(String email, String password, String username)?
         verification,
   }) {
@@ -888,7 +921,7 @@ class _$_Verification implements _Verification {
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function()? unauthenticated,
+    TResult Function(bool isSignUp)? unauthenticated,
     TResult Function(String email, String password, String username)?
         verification,
     required TResult orElse(),

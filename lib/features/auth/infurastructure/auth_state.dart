@@ -11,7 +11,8 @@ class AuthState with _$AuthState {
 
   const factory AuthState.onboarding() = _Onboarding;
 
-  const factory AuthState.unauthenticated() = _Unauthenticated;
+  const factory AuthState.unauthenticated({required bool isSignUp}) =
+      _Unauthenticated;
 
   const factory AuthState.verification(
     String email,

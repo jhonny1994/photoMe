@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/features/auth/providers.dart';
+import 'package:photome/features/likes/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/domain/post.dart';
 import 'package:photome/features/posts/presentation/edit_post_screen.dart';
@@ -12,6 +13,10 @@ class ActionsRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final likesCount = ref.watch(likesCountProvider(post.id!));
+    final likes = likesCount.asData?.value;
+    final count = likes?.count ?? 0;
+    final hasLiked = likes?.hasLiked ?? false;
     return Theme(
       data: Theme.of(context).copyWith(
         iconTheme: const IconThemeData(color: Colors.grey, size: 18),
@@ -25,12 +30,17 @@ class ActionsRow extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border),
-            label: Text(0.toString()),
+            onPressed: likesCount.isLoading
+                ? null
+                : () => ref.read(likeNotifierProvider).toggleLike(post.id!),
+            icon: Icon(
+              hasLiked ? Icons.favorite : Icons.favorite_border,
+              color: hasLiked ? Colors.red : null,
+            ),
+            label: Text(count.toString()),
           ),
           TextButton.icon(
-            label: Text(0.toString()),
+            label: const Text(''),
             icon: const Icon(Icons.comment),
             onPressed: () {},
           ),

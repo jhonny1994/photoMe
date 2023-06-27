@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/providers.dart';
+import 'package:photome/core/shared/providers.dart';
 import 'package:photome/features/auth/infurastructure/auth_state.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
@@ -18,9 +18,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     if (isBoarded != null && isBoarded != false) {
       user != null
           ? state = const AuthState.authenticated()
-          : state = const AuthState.unauthenticated();
-    } else {
-      state = const AuthState.onboarding();
+          : state = const AuthState.unauthenticated(isSignUp: true);
     }
   }
 
@@ -60,11 +58,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> toggleBoarding() async {
+  Future<void> toggleBoarding({required bool isBoarded}) async {
     state = const AuthState.loading();
     final prefs = await ref.read(prefsProvider.future);
-    await prefs.setBool('isBoarded', true);
-    state = const AuthState.unauthenticated();
+    await prefs.setBool('isBoarded', isBoarded);
+    await checkAndUpdatestate();
+  }
+
+  void toggleSignInUp({required bool isSignUp}) {
+    state = AuthState.unauthenticated(isSignUp: isSignUp);
   }
 
   Future<void> signIn(

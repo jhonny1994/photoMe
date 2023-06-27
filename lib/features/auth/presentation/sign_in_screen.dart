@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/features/auth/presentation/sign_up_screen.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/main.dart';
 
@@ -67,6 +66,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   return null;
                 },
                 controller: email,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   hintText: 'Enter your email',
@@ -149,12 +149,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 children: [
                   const Text("don't have an account?"),
                   TextButton(
-                    onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute<Widget>(
-                        builder: (context) => const SignUpScreen(),
-                      ),
-                      (route) => false,
-                    ),
+                    onPressed: () => ref
+                        .read(authNotifierProvider.notifier)
+                        .toggleSignInUp(isSignUp: true),
                     child: const Text('Signup'),
                   ),
                 ],

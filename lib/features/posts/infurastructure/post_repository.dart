@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:path/path.dart';
-import 'package:photome/core/providers.dart';
-import 'package:photome/core/utils.dart';
+import 'package:photome/core/shared/providers.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/posts/domain/post.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,6 +30,16 @@ class PostRepository {
         .order('created_at');
 
     return postsQuery.map(Post.fromMap).toList();
+  }
+
+  Future<Post> getPost(int postId) async {
+    final postsQuery = await client
+        .from('posts')
+        .select<Map<String, dynamic>>()
+        .eq('id', postId)
+        .single();
+
+    return Post.fromMap(postsQuery);
   }
 
   Future<Either<String, void>> addPost(Post post) async {

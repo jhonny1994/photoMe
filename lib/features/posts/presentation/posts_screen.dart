@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/error_screen.dart';
-import 'package:photome/core/loading_screen.dart';
-import 'package:photome/core/providers.dart';
+import 'package:photome/core/presentation/error_screen.dart';
+import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/wigets/actions_row.dart';
 import 'package:photome/features/posts/presentation/wigets/avatar_image.dart';
+import 'package:photome/features/posts/providers.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostsScreen extends ConsumerStatefulWidget {
@@ -132,7 +132,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                   },
                 ),
         ),
-        error: (error, stackTrace) => ErrorScreen(message: 'failure $error'),
+        error: (error, stackTrace) => ErrorScreen(message: error.toString()),
         loading: () => const LoadingScreen(),
       ),
     );

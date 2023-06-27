@@ -10,8 +10,12 @@ class ErrorScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: Text(
-          message,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

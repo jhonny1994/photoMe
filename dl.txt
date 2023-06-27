@@ -1,0 +1,22 @@
+  @override
+  void initState() {
+    super.initState();
+    _initURIHandler();
+  }
+
+  Future<void> _initURIHandler() async {
+    final initialURI = await getInitialUri();
+    if (initialURI != null) {
+      debugPrint('Initial URI received $initialURI');
+      debugPrint(initialURI.queryParameters.toString());
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoadingScreen(),
+        ),
+      );
+      if (!mounted) {
+        return;
+      }
+    }
+  }

@@ -136,7 +136,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       onPressed: () async {
                         await ref
                             .watch(authNotifierProvider.notifier)
-                            .toggleBoarding();
+                            .toggleBoarding(isBoarded: true);
                       },
                       child: const Text(
                         'Skip',
@@ -148,7 +148,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         if (_currentPage == pages.length - 1) {
                           await ref
                               .watch(authNotifierProvider.notifier)
-                              .toggleBoarding();
+                              .toggleBoarding(isBoarded: true);
                         } else {
                           await _pageController.animateToPage(
                             _currentPage + 1,
