@@ -5,18 +5,16 @@ part 'auth_state.freezed.dart';
 class AuthState with _$AuthState {
   const factory AuthState.authenticated() = _Authenticated;
 
+  const factory AuthState.completeProfile() = _CompleteProfile;
+
   const factory AuthState.failure(String message) = _Failure;
 
   const factory AuthState.loading() = _Loading;
 
   const factory AuthState.onboarding() = _Onboarding;
 
-  const factory AuthState.unauthenticated({required bool isSignUp}) =
-      _Unauthenticated;
+  const factory AuthState.unauthenticated() = _Unauthenticated;
 
-  const factory AuthState.verification(
-    String email,
-    String password,
-    String username,
-  ) = _Verification;
+  const factory AuthState.verification(String email, String password) =
+      _Verification;
 }

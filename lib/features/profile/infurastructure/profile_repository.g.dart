@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'likes_repository.dart';
+part of 'profile_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$likesRepositoryHash() => r'eb9bee181b5091843bda1d0d61752ee217be3425';
+String _$profileRepositoryHash() => r'393c4ca8186e5962d6e2a52b5baca7ed261f1e3a';
 
-/// See also [likesRepository].
-@ProviderFor(likesRepository)
-final likesRepositoryProvider = AutoDisposeProvider<LikesRepository>.internal(
-  likesRepository,
-  name: r'likesRepositoryProvider',
+/// See also [profileRepository].
+@ProviderFor(profileRepository)
+final profileRepositoryProvider =
+    AutoDisposeProvider<ProfileRepository>.internal(
+  profileRepository,
+  name: r'profileRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$likesRepositoryHash,
+      : _$profileRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef LikesRepositoryRef = AutoDisposeProviderRef<LikesRepository>;
+typedef ProfileRepositoryRef = AutoDisposeProviderRef<ProfileRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

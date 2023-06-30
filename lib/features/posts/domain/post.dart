@@ -1,4 +1,4 @@
-import 'package:photome/features/posts/domain/profile.dart';
+import 'package:photome/features/profile/domain/profile.dart';
 
 class Post {
   Post({

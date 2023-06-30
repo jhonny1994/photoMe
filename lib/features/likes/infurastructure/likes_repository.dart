@@ -6,11 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'likes_repository.g.dart';
 
 @riverpod
-LikeRepository likeRepository(LikeRepositoryRef ref) =>
-    LikeRepository(ref.read(supabaseClientProvider));
+LikesRepository likesRepository(LikesRepositoryRef ref) =>
+    LikesRepository(ref.read(supabaseClientProvider));
 
-class LikeRepository {
-  LikeRepository(this.client);
+class LikesRepository {
+  LikesRepository(this.client);
 
   final SupabaseClient client;
 

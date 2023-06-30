@@ -12,3 +12,13 @@ SupabaseClient supabaseClient(SupabaseClientRef _) {
 Future<SharedPreferences> prefs(PrefsRef _) {
   return SharedPreferences.getInstance();
 }
+
+@riverpod
+String imageUrl(
+  ImageUrlRef ref, {
+  required String userId,
+  required String fileName,
+}) {
+  final storageUrl = ref.read(supabaseClientProvider).storageUrl;
+  return '$storageUrl/object/public/$fileName';
+}

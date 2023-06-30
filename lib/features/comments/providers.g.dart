@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$imageUrlHash() => r'22a9788fdb872ad7c1622bda418710881c21b21b';
+String _$commentsCountHash() => r'157acc966fee1f76628954d70d9e6bcd166525c4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +29,32 @@ class _SystemHash {
   }
 }
 
-typedef ImageUrlRef = AutoDisposeProviderRef<String>;
+typedef CommentsCountRef = AutoDisposeStreamProviderRef<CommentInfo>;
 
-/// See also [imageUrl].
-@ProviderFor(imageUrl)
-const imageUrlProvider = ImageUrlFamily();
+/// See also [commentsCount].
+@ProviderFor(commentsCount)
+const commentsCountProvider = CommentsCountFamily();
 
-/// See also [imageUrl].
-class ImageUrlFamily extends Family<String> {
-  /// See also [imageUrl].
-  const ImageUrlFamily();
+/// See also [commentsCount].
+class CommentsCountFamily extends Family<AsyncValue<CommentInfo>> {
+  /// See also [commentsCount].
+  const CommentsCountFamily();
 
-  /// See also [imageUrl].
-  ImageUrlProvider call({
-    required String userId,
-    required String fileName,
-  }) {
-    return ImageUrlProvider(
-      userId: userId,
-      fileName: fileName,
+  /// See also [commentsCount].
+  CommentsCountProvider call(
+    int postId,
+  ) {
+    return CommentsCountProvider(
+      postId,
     );
   }
 
   @override
-  ImageUrlProvider getProviderOverride(
-    covariant ImageUrlProvider provider,
+  CommentsCountProvider getProviderOverride(
+    covariant CommentsCountProvider provider,
   ) {
     return call(
-      userId: provider.userId,
-      fileName: provider.fileName,
+      provider.postId,
     );
   }
 
@@ -73,46 +70,41 @@ class ImageUrlFamily extends Family<String> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'imageUrlProvider';
+  String? get name => r'commentsCountProvider';
 }
 
-/// See also [imageUrl].
-class ImageUrlProvider extends AutoDisposeProvider<String> {
-  /// See also [imageUrl].
-  ImageUrlProvider({
-    required this.userId,
-    required this.fileName,
-  }) : super.internal(
-          (ref) => imageUrl(
+/// See also [commentsCount].
+class CommentsCountProvider extends AutoDisposeStreamProvider<CommentInfo> {
+  /// See also [commentsCount].
+  CommentsCountProvider(
+    this.postId,
+  ) : super.internal(
+          (ref) => commentsCount(
             ref,
-            userId: userId,
-            fileName: fileName,
+            postId,
           ),
-          from: imageUrlProvider,
-          name: r'imageUrlProvider',
+          from: commentsCountProvider,
+          name: r'commentsCountProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$imageUrlHash,
-          dependencies: ImageUrlFamily._dependencies,
-          allTransitiveDependencies: ImageUrlFamily._allTransitiveDependencies,
+                  : _$commentsCountHash,
+          dependencies: CommentsCountFamily._dependencies,
+          allTransitiveDependencies:
+              CommentsCountFamily._allTransitiveDependencies,
         );
 
-  final String userId;
-  final String fileName;
+  final int postId;
 
   @override
   bool operator ==(Object other) {
-    return other is ImageUrlProvider &&
-        other.userId == userId &&
-        other.fileName == fileName;
+    return other is CommentsCountProvider && other.postId == postId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, userId.hashCode);
-    hash = _SystemHash.combine(hash, fileName.hashCode);
+    hash = _SystemHash.combine(hash, postId.hashCode);
 
     return _SystemHash.finish(hash);
   }

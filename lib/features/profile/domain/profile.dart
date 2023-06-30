@@ -1,23 +1,21 @@
 class Profile {
   Profile({
     required this.id,
-    required this.username,
+    this.username,
     this.profileImage,
   });
 
   factory Profile.fromMap(Map<String, dynamic> map) {
     return Profile(
       id: map['id'] as String,
-      username: map['username'] as String,
-      profileImage: map['profile_image'] != null
-          ? map['profile_image'] as String
-          : 'https://api.dicebear.com/6.x/avataaars-neutral/png?seed=${map['username']}',
+      username: map['username'] as String?,
+      profileImage: map['profile_image'] as String?,
     );
   }
 
   final String id;
   String? profileImage;
-  final String username;
+  String? username;
 
   Profile copyWith({
     String? id,

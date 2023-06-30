@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$likesCountHash() => r'53f4512cb8a35908f55e51df15a0112b84b9a16d';
+String _$likesCountHash() => r'4265dbbb90b66d9e9daa41c5033fdf6c827b41de';
 
 /// Copied from Dart SDK
 class _SystemHash {

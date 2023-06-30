@@ -3,17 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/main.dart';
 
-class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+class AuthScreen extends ConsumerStatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+class _SignInScreenState extends ConsumerState<AuthScreen> {
   final email = TextEditingController();
+  bool isSignUp = true;
   final password = TextEditingController();
-  final username = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
@@ -47,31 +47,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'Create an account to continue.',
+                  'Enter your email and password to ${isSignUp ? 'create a new account' : 'log to your account'}.',
                   style: Theme.of(context).textTheme.bodySmall,
                   textAlign: TextAlign.center,
-                ),
-              ),
-              _gap(),
-              TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  final emailValid = RegExp(
-                    r'^[A-Za-z][A-Za-z0-9_]{7,29}$',
-                  ).hasMatch(value);
-                  if (!emailValid) {
-                    return 'Please enter a valid username';
-                  }
-                  return null;
-                },
-                controller: username,
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                  hintText: 'Enter your username',
-                  prefixIcon: Icon(Icons.email_outlined),
-                  border: OutlineInputBorder(),
                 ),
               ),
               _gap(),
@@ -138,11 +116,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Text(
-                      'Signup',
-                      style: TextStyle(
+                      isSignUp ? 'Sign up' : 'Sign in',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -150,11 +128,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState?.validate() ?? false) {
-                      await ref.read(authNotifierProvider.notifier).signUp(
-                            email.text.trim(),
-                            password.text,
-                            username.text.trim(),
-                          );
+                      isSignUp
+                          ? await ref
+                              .read(authNotifierProvider.notifier)
+                              .signUp(email.text.trim(), password.text)
+                          : await ref
+                              .read(authNotifierProvider.notifier)
+                              .signIn(email.text.trim(), password.text);
                       if (mounted) {
                         await Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute<Widget>(
@@ -171,12 +151,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Already have an account?'),
+                  const Text("don't have an account?"),
                   TextButton(
-                    onPressed: () => ref
-                        .read(authNotifierProvider.notifier)
-                        .toggleSignInUp(isSignUp: false),
-                    child: const Text('Sign in'),
+                    onPressed: () => setState(() {
+                      isSignUp = !isSignUp;
+                    }),
+                    child: Text(
+                      !isSignUp ? 'Sign up' : 'Sign in',
+                    ),
                   ),
                 ],
               ),

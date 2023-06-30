@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
+import 'package:photome/core/shared/providers.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/wigets/actions_row.dart';
 import 'package:photome/features/posts/presentation/wigets/avatar_image.dart';
-import 'package:photome/features/posts/providers.dart';
+import 'package:photome/features/profile/presentation/profile_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostsScreen extends ConsumerStatefulWidget {
@@ -22,6 +23,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     final posts = ref.watch(postNotifierProvider);
+
     return Scaffold(
       drawer: Drawer(
         width: 250,
@@ -36,6 +38,18 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
               ),
             ),
             const Spacer(),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('profile'),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<Widget>(
+                  builder: (context) => ProfileScreen(
+                    profileId:
+                        ref.read(supabaseClientProvider).auth.currentUser!.id,
+                  ),
+                ),
+              ),
+            ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Sign out'),
@@ -85,7 +99,14 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                       children: [
                         Row(
                           children: [
-                            AvatarImage(post.profile!.profileImage!),
+                            AvatarImage(
+                              ref.read(
+                                imageUrlProvider(
+                                  userId: post.profileId,
+                                  fileName: post.profile!.profileImage!,
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Column(

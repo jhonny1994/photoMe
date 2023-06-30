@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/features/auth/providers.dart';
+import 'package:photome/features/comments/providers.dart';
+import 'package:photome/features/likes/infurastructure/likes_repository.dart';
 import 'package:photome/features/likes/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/domain/post.dart';
 import 'package:photome/features/posts/presentation/edit_post_screen.dart';
+import 'package:photome/features/posts/presentation/post_screen.dart';
 
 class ActionsRow extends ConsumerWidget {
   const ActionsRow({required this.post, super.key});
@@ -13,10 +16,13 @@ class ActionsRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final likesCount = ref.watch(likesCountProvider(post.id!));
-    final likes = likesCount.asData?.value;
-    final count = likes?.count ?? 0;
+    final likes = ref.watch(likesCountProvider(post.id!)).asData?.value;
+    final likesCount = likes?.count ?? 0;
     final hasLiked = likes?.hasLiked ?? false;
+
+    final comments = ref.watch(commentsCountProvider(post.id!)).asData?.value;
+    final commentsCount = comments?.count ?? 0;
+    final hasCommented = comments?.hasCommented ?? false;
     return Theme(
       data: Theme.of(context).copyWith(
         iconTheme: const IconThemeData(color: Colors.grey, size: 18),
@@ -30,19 +36,25 @@ class ActionsRow extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextButton.icon(
-            onPressed: likesCount.isLoading
-                ? null
-                : () => ref.read(likeNotifierProvider).toggleLike(post.id!),
+            onPressed: () =>
+                ref.read(likesRepositoryProvider).toggleLike(post.id!),
             icon: Icon(
               hasLiked ? Icons.favorite : Icons.favorite_border,
               color: hasLiked ? Colors.red : null,
             ),
-            label: Text(count.toString()),
+            label: Text(likesCount.toString()),
           ),
           TextButton.icon(
-            label: const Text(''),
-            icon: const Icon(Icons.comment),
-            onPressed: () {},
+            label: Text(commentsCount.toString()),
+            icon: Icon(
+              hasCommented ? Icons.comment : Icons.comment_outlined,
+              color: hasCommented ? Colors.grey.shade800 : null,
+            ),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<Widget>(
+                builder: (context) => PostScreen(postId: post.id!),
+              ),
+            ),
           ),
           if (post.profileId == ref.read(userProvider)!.id)
             IconButton(

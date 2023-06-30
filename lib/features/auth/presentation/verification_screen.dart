@@ -8,14 +8,12 @@ import 'package:photome/main.dart';
 class VerificationScreen extends ConsumerStatefulWidget {
   const VerificationScreen(
     this.email,
-    this.password,
-    this.username, {
+    this.password, {
     super.key,
   });
 
   final String email;
   final String password;
-  final String username;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignInScreenState();
@@ -131,12 +129,9 @@ class _SignInScreenState extends ConsumerState<VerificationScreen> {
                 children: [
                   if (canResendOtp)
                     TextButton(
-                      onPressed: () =>
-                          ref.read(authNotifierProvider.notifier).signUp(
-                                widget.email,
-                                widget.password,
-                                widget.username,
-                              ),
+                      onPressed: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .signUp(widget.email, widget.password),
                       child: const Text('Resend OTP'),
                     )
                   else

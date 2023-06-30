@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -17,16 +19,20 @@ class PostNotifier extends _$PostNotifier {
     return ref.read(postRepositoryProvider).deletePost(postId, imageUrl);
   }
 
+  Future<Post> getPost(int postId) async {
+    return ref.read(postRepositoryProvider).getPost(postId);
+  }
+
   Future<Either<String, void>> updatePost(Post post) async {
     return ref.read(postRepositoryProvider).updatePost(post);
   }
 
   Future<Either<String, String>> uploadImage(File image, String userId) async {
-    return ref.read(postRepositoryProvider).uploadImage(image, userId);
+    return ref.read(postRepositoryProvider).uploadPostImage(image, userId);
   }
 
   Future<void> deleteImage(String imageUrl) async {
-    return ref.read(postRepositoryProvider).deleteImage(imageUrl);
+    return ref.read(postRepositoryProvider).deletePostImage(imageUrl);
   }
 
   void _initPostsChannel() {

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photome/core/shared/providers.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/domain/post.dart';
-import 'package:photome/features/posts/providers.dart';
 
 class EditPostScreen extends ConsumerStatefulWidget {
   const EditPostScreen(this.post, {super.key});

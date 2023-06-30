@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/shared/providers.dart';
 import 'package:photome/features/auth/infurastructure/auth_state.dart';
 import 'package:photome/features/auth/providers.dart';
+import 'package:photome/features/profile/domain/profile.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AuthNotifier extends StateNotifier<AuthState> {
@@ -16,29 +17,45 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final isBoarded = await ref.read(isBoardedProvider.future);
     final user = ref.read(supabaseClientProvider).auth.currentUser;
     if (isBoarded != null && isBoarded != false) {
-      user != null
-          ? state = const AuthState.authenticated()
-          : state = const AuthState.unauthenticated(isSignUp: true);
+      if (user != null) {
+        final profileCompleted = await isProfileCompleted(user.id);
+        if (profileCompleted) {
+          state = const AuthState.authenticated();
+        } else {
+          state = const AuthState.completeProfile();
+        }
+      } else {
+        state = const AuthState.unauthenticated();
+      }
+    }
+  }
+
+  Future<bool> isProfileCompleted(String userId) async {
+    try {
+      final query = await client
+          .from('profiles')
+          .select<Map<String, dynamic>>()
+          .eq('id', userId)
+          .single();
+      final profile = Profile.fromMap(query);
+      if (profile.username != null && profile.profileImage != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
   Future<void> signUp(
     String email,
     String password,
-    String username,
   ) async {
     state = const AuthState.loading();
     try {
-      await client.auth.signUp(
-        email: email,
-        password: password,
-        data: {'username': username},
-      );
-      state = AuthState.verification(
-        email,
-        password,
-        username,
-      );
+      await client.auth.signUp(email: email, password: password);
+      state = AuthState.verification(email, password);
     } catch (e) {
       state = AuthState.failure(e.toString());
     }
@@ -52,7 +69,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         token: otp,
         type: sp.OtpType.signup,
       );
-      state = const AuthState.authenticated();
+      state = const AuthState.completeProfile();
     } catch (e) {
       state = AuthState.failure(e.toString());
     }
@@ -63,10 +80,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final prefs = await ref.read(prefsProvider.future);
     await prefs.setBool('isBoarded', isBoarded);
     await checkAndUpdatestate();
-  }
-
-  void toggleSignInUp({required bool isSignUp}) {
-    state = AuthState.unauthenticated(isSignUp: isSignUp);
   }
 
   Future<void> signIn(

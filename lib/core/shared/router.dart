@@ -1,19 +1,21 @@
 import 'package:go_router/go_router.dart';
 import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
+import 'package:photome/features/auth/presentation/auth_screen.dart';
 import 'package:photome/features/auth/presentation/onboarding_screen.dart';
-import 'package:photome/features/auth/presentation/sign_in_screen.dart';
-import 'package:photome/features/auth/presentation/sign_up_screen.dart';
 import 'package:photome/features/auth/presentation/verification_screen.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/domain/post.dart';
 import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/edit_post_screen.dart';
 import 'package:photome/features/posts/presentation/posts_screen.dart';
+import 'package:photome/features/profile/presentation/profile_screen.dart';
+import 'package:photome/features/profile/presentation/update_profile_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final routerProvider = Provider((ref) {
   return GoRouter(
+    debugLogDiagnostics: true,
     routes: [
       GoRoute(
         path: '/onboarding',
@@ -30,20 +32,15 @@ final routerProvider = Provider((ref) {
         builder: (context, state) => const LoadingScreen(),
       ),
       GoRoute(
-        path: '/signup',
-        builder: (context, state) => const SignUpScreen(),
-      ),
-      GoRoute(
-        path: '/signin',
-        builder: (context, state) => const SignInScreen(),
+        path: '/auth',
+        builder: (context, state) => const AuthScreen(),
       ),
       GoRoute(
         path: '/verification',
         builder: (context, state) {
           final email = state.queryParameters['email']!;
           final password = state.queryParameters['password']!;
-          final username = state.queryParameters['username']!;
-          return VerificationScreen(email, password, username);
+          return VerificationScreen(email, password);
         },
       ),
       GoRoute(
@@ -58,6 +55,15 @@ final routerProvider = Provider((ref) {
         path: '/edit',
         builder: (context, state) => EditPostScreen(state.extra! as Post),
       ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) =>
+            ProfileScreen(profileId: state.extra! as String),
+      ),
+      GoRoute(
+        path: '/updateProfile',
+        builder: (context, state) => const UpdateProfileScreen(),
+      ),
     ],
     redirect: (context, state) async {
       final authState = ref.watch(authNotifierProvider);
@@ -65,10 +71,11 @@ final routerProvider = Provider((ref) {
         authenticated: () => '/',
         failure: (message) => '/error?message=$message',
         loading: () => '/loading',
-        verification: (email, password, username) =>
-            '/verification?email=$email&password=$password&username=$username',
+        verification: (email, password) =>
+            '/verification?email=$email&password=$password',
         onboarding: () => '/onboarding',
-        unauthenticated: (bool isSignUp) => isSignUp ? '/signup' : '/signin',
+        unauthenticated: () => '/auth',
+        completeProfile: () => '/updateProfile',
       );
     },
   );

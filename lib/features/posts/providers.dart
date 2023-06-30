@@ -1,14 +1,7 @@
-import 'package:photome/core/shared/providers.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:photome/features/posts/application/posts_notifier.dart';
+import 'package:photome/features/posts/domain/post.dart';
 
-part 'providers.g.dart';
-
-@riverpod
-String imageUrl(
-  ImageUrlRef ref, {
-  required String userId,
-  required String fileName,
-}) {
-  final storageUrl = ref.read(supabaseClientProvider).storageUrl;
-  return '$storageUrl/object/public/$fileName';
-}
+final postProvider = FutureProvider.family<Post, int>((ref, postId) async {
+  return ref.read(postNotifierProvider.notifier).getPost(postId);
+});

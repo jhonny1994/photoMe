@@ -19,40 +19,41 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -63,6 +64,7 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -73,6 +75,7 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -139,12 +142,12 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
     return authenticated();
   }
@@ -153,12 +156,12 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
     return authenticated?.call();
   }
@@ -167,12 +170,12 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -185,6 +188,7 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -198,6 +202,7 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -211,6 +216,7 @@ class _$_Authenticated implements _Authenticated {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -227,6 +233,138 @@ class _$_Authenticated implements _Authenticated {
 
 abstract class _Authenticated implements AuthState {
   const factory _Authenticated() = _$_Authenticated;
+}
+
+/// @nodoc
+abstract class _$$_CompleteProfileCopyWith<$Res> {
+  factory _$$_CompleteProfileCopyWith(
+          _$_CompleteProfile value, $Res Function(_$_CompleteProfile) then) =
+      __$$_CompleteProfileCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_CompleteProfileCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_CompleteProfile>
+    implements _$$_CompleteProfileCopyWith<$Res> {
+  __$$_CompleteProfileCopyWithImpl(
+      _$_CompleteProfile _value, $Res Function(_$_CompleteProfile) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_CompleteProfile implements _CompleteProfile {
+  const _$_CompleteProfile();
+
+  @override
+  String toString() {
+    return 'AuthState.completeProfile()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_CompleteProfile);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() authenticated,
+    required TResult Function() completeProfile,
+    required TResult Function(String message) failure,
+    required TResult Function() loading,
+    required TResult Function() onboarding,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
+  }) {
+    return completeProfile();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
+    TResult? Function(String message)? failure,
+    TResult? Function()? loading,
+    TResult? Function()? onboarding,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
+  }) {
+    return completeProfile?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? authenticated,
+    TResult Function()? completeProfile,
+    TResult Function(String message)? failure,
+    TResult Function()? loading,
+    TResult Function()? onboarding,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
+    required TResult orElse(),
+  }) {
+    if (completeProfile != null) {
+      return completeProfile();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
+    required TResult Function(_Failure value) failure,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Onboarding value) onboarding,
+    required TResult Function(_Unauthenticated value) unauthenticated,
+    required TResult Function(_Verification value) verification,
+  }) {
+    return completeProfile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
+    TResult? Function(_Failure value)? failure,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Onboarding value)? onboarding,
+    TResult? Function(_Unauthenticated value)? unauthenticated,
+    TResult? Function(_Verification value)? verification,
+  }) {
+    return completeProfile?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
+    TResult Function(_Failure value)? failure,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Onboarding value)? onboarding,
+    TResult Function(_Unauthenticated value)? unauthenticated,
+    TResult Function(_Verification value)? verification,
+    required TResult orElse(),
+  }) {
+    if (completeProfile != null) {
+      return completeProfile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CompleteProfile implements AuthState {
+  const factory _CompleteProfile() = _$_CompleteProfile;
 }
 
 /// @nodoc
@@ -293,12 +431,12 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
     return failure(message);
   }
@@ -307,12 +445,12 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
     return failure?.call(message);
   }
@@ -321,12 +459,12 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -339,6 +477,7 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -352,6 +491,7 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -365,6 +505,7 @@ class _$_Failure implements _Failure {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -426,12 +567,12 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
     return loading();
   }
@@ -440,12 +581,12 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
     return loading?.call();
   }
@@ -454,12 +595,12 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -472,6 +613,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -485,6 +627,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -498,6 +641,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -555,12 +699,12 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
     return onboarding();
   }
@@ -569,12 +713,12 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
     return onboarding?.call();
   }
@@ -583,12 +727,12 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (onboarding != null) {
@@ -601,6 +745,7 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -614,6 +759,7 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -627,6 +773,7 @@ class _$_Onboarding implements _Onboarding {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -650,8 +797,6 @@ abstract class _$$_UnauthenticatedCopyWith<$Res> {
   factory _$$_UnauthenticatedCopyWith(
           _$_Unauthenticated value, $Res Function(_$_Unauthenticated) then) =
       __$$_UnauthenticatedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({bool isSignUp});
 }
 
 /// @nodoc
@@ -661,94 +806,69 @@ class __$$_UnauthenticatedCopyWithImpl<$Res>
   __$$_UnauthenticatedCopyWithImpl(
       _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isSignUp = null,
-  }) {
-    return _then(_$_Unauthenticated(
-      isSignUp: null == isSignUp
-          ? _value.isSignUp
-          : isSignUp // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_Unauthenticated implements _Unauthenticated {
-  const _$_Unauthenticated({required this.isSignUp});
-
-  @override
-  final bool isSignUp;
+  const _$_Unauthenticated();
 
   @override
   String toString() {
-    return 'AuthState.unauthenticated(isSignUp: $isSignUp)';
+    return 'AuthState.unauthenticated()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Unauthenticated &&
-            (identical(other.isSignUp, isSignUp) ||
-                other.isSignUp == isSignUp));
+        (other.runtimeType == runtimeType && other is _$_Unauthenticated);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isSignUp);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
-      __$$_UnauthenticatedCopyWithImpl<_$_Unauthenticated>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
-    return unauthenticated(isSignUp);
+    return unauthenticated();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
-    return unauthenticated?.call(isSignUp);
+    return unauthenticated?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
-      return unauthenticated(isSignUp);
+      return unauthenticated();
     }
     return orElse();
   }
@@ -757,6 +877,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -770,6 +891,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -783,6 +905,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -798,13 +921,7 @@ class _$_Unauthenticated implements _Unauthenticated {
 }
 
 abstract class _Unauthenticated implements AuthState {
-  const factory _Unauthenticated({required final bool isSignUp}) =
-      _$_Unauthenticated;
-
-  bool get isSignUp;
-  @JsonKey(ignore: true)
-  _$$_UnauthenticatedCopyWith<_$_Unauthenticated> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _Unauthenticated() = _$_Unauthenticated;
 }
 
 /// @nodoc
@@ -813,7 +930,7 @@ abstract class _$$_VerificationCopyWith<$Res> {
           _$_Verification value, $Res Function(_$_Verification) then) =
       __$$_VerificationCopyWithImpl<$Res>;
   @useResult
-  $Res call({String email, String password, String username});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -829,7 +946,6 @@ class __$$_VerificationCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
     Object? password = null,
-    Object? username = null,
   }) {
     return _then(_$_Verification(
       null == email
@@ -840,10 +956,6 @@ class __$$_VerificationCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -851,18 +963,16 @@ class __$$_VerificationCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Verification implements _Verification {
-  const _$_Verification(this.email, this.password, this.username);
+  const _$_Verification(this.email, this.password);
 
   @override
   final String email;
   @override
   final String password;
-  @override
-  final String username;
 
   @override
   String toString() {
-    return 'AuthState.verification(email: $email, password: $password, username: $username)';
+    return 'AuthState.verification(email: $email, password: $password)';
   }
 
   @override
@@ -872,13 +982,11 @@ class _$_Verification implements _Verification {
             other is _$_Verification &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.username, username) ||
-                other.username == username));
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, password, username);
+  int get hashCode => Object.hash(runtimeType, email, password);
 
   @JsonKey(ignore: true)
   @override
@@ -890,44 +998,44 @@ class _$_Verification implements _Verification {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() authenticated,
+    required TResult Function() completeProfile,
     required TResult Function(String message) failure,
     required TResult Function() loading,
     required TResult Function() onboarding,
-    required TResult Function(bool isSignUp) unauthenticated,
-    required TResult Function(String email, String password, String username)
-        verification,
+    required TResult Function() unauthenticated,
+    required TResult Function(String email, String password) verification,
   }) {
-    return verification(email, password, username);
+    return verification(email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? authenticated,
+    TResult? Function()? completeProfile,
     TResult? Function(String message)? failure,
     TResult? Function()? loading,
     TResult? Function()? onboarding,
-    TResult? Function(bool isSignUp)? unauthenticated,
-    TResult? Function(String email, String password, String username)?
-        verification,
+    TResult? Function()? unauthenticated,
+    TResult? Function(String email, String password)? verification,
   }) {
-    return verification?.call(email, password, username);
+    return verification?.call(email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? authenticated,
+    TResult Function()? completeProfile,
     TResult Function(String message)? failure,
     TResult Function()? loading,
     TResult Function()? onboarding,
-    TResult Function(bool isSignUp)? unauthenticated,
-    TResult Function(String email, String password, String username)?
-        verification,
+    TResult Function()? unauthenticated,
+    TResult Function(String email, String password)? verification,
     required TResult orElse(),
   }) {
     if (verification != null) {
-      return verification(email, password, username);
+      return verification(email, password);
     }
     return orElse();
   }
@@ -936,6 +1044,7 @@ class _$_Verification implements _Verification {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_CompleteProfile value) completeProfile,
     required TResult Function(_Failure value) failure,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Onboarding value) onboarding,
@@ -949,6 +1058,7 @@ class _$_Verification implements _Verification {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_CompleteProfile value)? completeProfile,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Onboarding value)? onboarding,
@@ -962,6 +1072,7 @@ class _$_Verification implements _Verification {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_CompleteProfile value)? completeProfile,
     TResult Function(_Failure value)? failure,
     TResult Function(_Loading value)? loading,
     TResult Function(_Onboarding value)? onboarding,
@@ -977,13 +1088,11 @@ class _$_Verification implements _Verification {
 }
 
 abstract class _Verification implements AuthState {
-  const factory _Verification(
-          final String email, final String password, final String username) =
+  const factory _Verification(final String email, final String password) =
       _$_Verification;
 
   String get email;
   String get password;
-  String get username;
   @JsonKey(ignore: true)
   _$$_VerificationCopyWith<_$_Verification> get copyWith =>
       throw _privateConstructorUsedError;
