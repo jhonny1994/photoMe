@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/comments/presentation/comments_screen.dart';
 import 'package:photome/features/comments/providers.dart';
@@ -34,71 +35,105 @@ class ActionsRow extends ConsumerWidget {
           ),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          TextButton.icon(
-            onPressed: () => likesQuery.isLoading
-                ? null
-                : ref.read(likesRepositoryProvider).toggleLike(post.id!),
-            icon: Icon(
-              hasLiked ? Icons.favorite : Icons.favorite_border,
-              color: hasLiked ? Colors.red : null,
-            ),
-            label: Text(likesCount.toString()),
+          Row(
+            children: [
+              if (likesCount != 0)
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
+                    smallGap(context, isHeight: false),
+                    Text(
+                      '$likesCount ${likesCount != 1 ? 'likes' : 'like'}',
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              const Spacer(),
+              if (commentsCount != 0)
+                Row(
+                  children: [
+                    const Icon(Icons.comment),
+                    smallGap(context, isHeight: false),
+                    Text(
+                      '$commentsCount ${commentsCount != 1 ? 'comments' : 'comment'}',
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+            ],
           ),
-          TextButton.icon(
-            label: Text(commentsCount.toString()),
-            icon: Icon(
-              hasCommented ? Icons.comment : Icons.comment_outlined,
-              color: hasCommented ? Colors.grey.shade800 : null,
-            ),
-            onPressed: commentsQuery.isLoading
-                ? null
-                : commentsInfo == null
+          smallGap(context),
+          const Divider(height: 0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () => likesQuery.isLoading
                     ? null
-                    : () => Navigator.of(context).push(
-                          MaterialPageRoute<Widget>(
-                            builder: (context) => CommentsScreen(
-                              post: post,
-                              comments: commentsInfo.comments,
-                            ),
-                          ),
-                        ),
-          ),
-          if (post.profileId == ref.read(userProvider)!.id)
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<Widget>(
-                  builder: (context) => EditPostScreen(post),
+                    : ref.read(likesRepositoryProvider).toggleLike(post.id!),
+                child: Icon(
+                  hasLiked ? Icons.favorite : Icons.favorite_border,
+                  color: hasLiked ? Colors.grey.shade800 : null,
                 ),
               ),
-            ),
-          if (post.profileId == ref.read(userProvider)!.id)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () async {
-                final operation = await ref
-                    .read(postNotifierProvider.notifier)
-                    .deletePost(post.id!, post.imageUrl);
-                operation.fold(
-                  (l) => ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l),
+              TextButton(
+                onPressed: commentsQuery.isLoading
+                    ? null
+                    : commentsInfo == null
+                        ? null
+                        : () => Navigator.of(context).push(
+                              MaterialPageRoute<Widget>(
+                                builder: (context) => CommentsScreen(
+                                  post: post,
+                                  comments: commentsInfo.comments,
+                                ),
+                              ),
+                            ),
+                child: Icon(
+                  hasCommented ? Icons.comment : Icons.comment_outlined,
+                  color: hasCommented ? Colors.grey.shade800 : null,
+                ),
+              ),
+              if (post.profileId == ref.read(userProvider)!.id)
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<Widget>(
+                      builder: (context) => EditPostScreen(post),
                     ),
                   ),
-                  (r) => ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Post deleted successfully'),
-                    ),
-                  ),
-                );
-              },
-            ),
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {},
+                ),
+              if (post.profileId == ref.read(userProvider)!.id)
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () async {
+                    final operation = await ref
+                        .read(postNotifierProvider.notifier)
+                        .deletePost(post.id!, post.imageUrl);
+                    operation.fold(
+                      (l) => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l),
+                        ),
+                      ),
+                      (r) => ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Post deleted successfully'),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              IconButton(
+                icon: const Icon(Icons.share),
+                onPressed: () {},
+              ),
+            ],
           ),
         ],
       ),
