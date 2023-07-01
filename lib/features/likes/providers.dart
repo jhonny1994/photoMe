@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'providers.g.dart';
 
 @riverpod
-Stream<LikeInfo> likesCount(LikesCountRef ref, int postId) async* {
+Stream<LikeInfo> likesQuery(LikesQueryRef ref, int postId) async* {
   final likesStream = ref.read(likesRepositoryProvider).likes;
   final userId = ref.read(supabaseClientProvider).auth.currentUser!.id;
   await for (final likes in likesStream) {

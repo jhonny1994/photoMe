@@ -133,11 +133,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextButton(
-                      onPressed: () async {
-                        await ref
-                            .watch(authNotifierProvider.notifier)
-                            .toggleBoarding(isBoarded: true);
-                      },
+                      onPressed: () => ref
+                          .read(authNotifierProvider.notifier)
+                          .toggleBoarding()
+                          .whenComplete(
+                            () => ref.refresh(authNotifierProvider),
+                          ),
                       child: const Text(
                         'Skip',
                         style: TextStyle(color: Colors.white),
@@ -147,8 +148,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       onPressed: () async {
                         if (_currentPage == pages.length - 1) {
                           await ref
-                              .watch(authNotifierProvider.notifier)
-                              .toggleBoarding(isBoarded: true);
+                              .read(authNotifierProvider.notifier)
+                              .toggleBoarding()
+                              .whenComplete(
+                                () => ref.refresh(authNotifierProvider),
+                              );
                         } else {
                           await _pageController.animateToPage(
                             _currentPage + 1,

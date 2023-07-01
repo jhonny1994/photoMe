@@ -18,6 +18,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       child: DevicePreview(
+        enabled: false,
         tools: const [
           ...DevicePreview.defaultTools,
           DevicePreviewScreenshot(),

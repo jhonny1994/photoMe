@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$commentsCountHash() => r'157acc966fee1f76628954d70d9e6bcd166525c4';
+String _$commentsQueryHash() => r'33436127eedbad90341529036bb61868be3ce46f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,29 +29,29 @@ class _SystemHash {
   }
 }
 
-typedef CommentsCountRef = AutoDisposeStreamProviderRef<CommentInfo>;
+typedef CommentsQueryRef = AutoDisposeStreamProviderRef<CommentInfo?>;
 
-/// See also [commentsCount].
-@ProviderFor(commentsCount)
-const commentsCountProvider = CommentsCountFamily();
+/// See also [commentsQuery].
+@ProviderFor(commentsQuery)
+const commentsQueryProvider = CommentsQueryFamily();
 
-/// See also [commentsCount].
-class CommentsCountFamily extends Family<AsyncValue<CommentInfo>> {
-  /// See also [commentsCount].
-  const CommentsCountFamily();
+/// See also [commentsQuery].
+class CommentsQueryFamily extends Family<AsyncValue<CommentInfo?>> {
+  /// See also [commentsQuery].
+  const CommentsQueryFamily();
 
-  /// See also [commentsCount].
-  CommentsCountProvider call(
+  /// See also [commentsQuery].
+  CommentsQueryProvider call(
     int postId,
   ) {
-    return CommentsCountProvider(
+    return CommentsQueryProvider(
       postId,
     );
   }
 
   @override
-  CommentsCountProvider getProviderOverride(
-    covariant CommentsCountProvider provider,
+  CommentsQueryProvider getProviderOverride(
+    covariant CommentsQueryProvider provider,
   ) {
     return call(
       provider.postId,
@@ -70,35 +70,35 @@ class CommentsCountFamily extends Family<AsyncValue<CommentInfo>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'commentsCountProvider';
+  String? get name => r'commentsQueryProvider';
 }
 
-/// See also [commentsCount].
-class CommentsCountProvider extends AutoDisposeStreamProvider<CommentInfo> {
-  /// See also [commentsCount].
-  CommentsCountProvider(
+/// See also [commentsQuery].
+class CommentsQueryProvider extends AutoDisposeStreamProvider<CommentInfo?> {
+  /// See also [commentsQuery].
+  CommentsQueryProvider(
     this.postId,
   ) : super.internal(
-          (ref) => commentsCount(
+          (ref) => commentsQuery(
             ref,
             postId,
           ),
-          from: commentsCountProvider,
-          name: r'commentsCountProvider',
+          from: commentsQueryProvider,
+          name: r'commentsQueryProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$commentsCountHash,
-          dependencies: CommentsCountFamily._dependencies,
+                  : _$commentsQueryHash,
+          dependencies: CommentsQueryFamily._dependencies,
           allTransitiveDependencies:
-              CommentsCountFamily._allTransitiveDependencies,
+              CommentsQueryFamily._allTransitiveDependencies,
         );
 
   final int postId;
 
   @override
   bool operator ==(Object other) {
-    return other is CommentsCountProvider && other.postId == postId;
+    return other is CommentsQueryProvider && other.postId == postId;
   }
 
   @override

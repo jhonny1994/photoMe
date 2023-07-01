@@ -6,7 +6,7 @@ part of 'providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$likesCountHash() => r'4265dbbb90b66d9e9daa41c5033fdf6c827b41de';
+String _$likesQueryHash() => r'b509bb7a1c93d7c741f3ffe01d56a4242e562e12';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,29 +29,29 @@ class _SystemHash {
   }
 }
 
-typedef LikesCountRef = AutoDisposeStreamProviderRef<LikeInfo>;
+typedef LikesQueryRef = AutoDisposeStreamProviderRef<LikeInfo>;
 
-/// See also [likesCount].
-@ProviderFor(likesCount)
-const likesCountProvider = LikesCountFamily();
+/// See also [likesQuery].
+@ProviderFor(likesQuery)
+const likesQueryProvider = LikesQueryFamily();
 
-/// See also [likesCount].
-class LikesCountFamily extends Family<AsyncValue<LikeInfo>> {
-  /// See also [likesCount].
-  const LikesCountFamily();
+/// See also [likesQuery].
+class LikesQueryFamily extends Family<AsyncValue<LikeInfo>> {
+  /// See also [likesQuery].
+  const LikesQueryFamily();
 
-  /// See also [likesCount].
-  LikesCountProvider call(
+  /// See also [likesQuery].
+  LikesQueryProvider call(
     int postId,
   ) {
-    return LikesCountProvider(
+    return LikesQueryProvider(
       postId,
     );
   }
 
   @override
-  LikesCountProvider getProviderOverride(
-    covariant LikesCountProvider provider,
+  LikesQueryProvider getProviderOverride(
+    covariant LikesQueryProvider provider,
   ) {
     return call(
       provider.postId,
@@ -70,35 +70,35 @@ class LikesCountFamily extends Family<AsyncValue<LikeInfo>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'likesCountProvider';
+  String? get name => r'likesQueryProvider';
 }
 
-/// See also [likesCount].
-class LikesCountProvider extends AutoDisposeStreamProvider<LikeInfo> {
-  /// See also [likesCount].
-  LikesCountProvider(
+/// See also [likesQuery].
+class LikesQueryProvider extends AutoDisposeStreamProvider<LikeInfo> {
+  /// See also [likesQuery].
+  LikesQueryProvider(
     this.postId,
   ) : super.internal(
-          (ref) => likesCount(
+          (ref) => likesQuery(
             ref,
             postId,
           ),
-          from: likesCountProvider,
-          name: r'likesCountProvider',
+          from: likesQueryProvider,
+          name: r'likesQueryProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$likesCountHash,
-          dependencies: LikesCountFamily._dependencies,
+                  : _$likesQueryHash,
+          dependencies: LikesQueryFamily._dependencies,
           allTransitiveDependencies:
-              LikesCountFamily._allTransitiveDependencies,
+              LikesQueryFamily._allTransitiveDependencies,
         );
 
   final int postId;
 
   @override
   bool operator ==(Object other) {
-    return other is LikesCountProvider && other.postId == postId;
+    return other is LikesQueryProvider && other.postId == postId;
   }
 
   @override

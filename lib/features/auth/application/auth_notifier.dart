@@ -27,6 +27,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       } else {
         state = const AuthState.unauthenticated();
       }
+    } else {
+      state = const AuthState.onboarding();
     }
   }
 
@@ -75,11 +77,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> toggleBoarding({required bool isBoarded}) async {
+  Future<void> toggleBoarding() async {
     state = const AuthState.loading();
     final prefs = await ref.read(prefsProvider.future);
-    await prefs.setBool('isBoarded', isBoarded);
-    await checkAndUpdatestate();
+    await prefs.setBool('isBoarded', true);
+    state = const AuthState.unauthenticated();
   }
 
   Future<void> signIn(

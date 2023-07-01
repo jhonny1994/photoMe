@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/main.dart';
 
@@ -20,14 +21,11 @@ class VerificationScreen extends ConsumerStatefulWidget {
 }
 
 class _SignInScreenState extends ConsumerState<VerificationScreen> {
-  final otp = TextEditingController();
   bool canResendOtp = false;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Widget _gap() =>
-      SizedBox(height: MediaQuery.of(context).viewInsets.bottom == 0 ? 16 : 8);
-
   int counter = 60;
+  final otp = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -55,30 +53,20 @@ class _SignInScreenState extends ConsumerState<VerificationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius:
-                    MediaQuery.of(context).viewInsets.bottom == 0 ? 100 : 50,
-                backgroundImage: const AssetImage('assets/images/logo.png'),
+              Text(
+                'Welcome to PhotoMe!',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-              _gap(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Welcome to PhotoMe!',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+              smallGap(context),
+              Text(
+                'Enter the OTP sent to ${widget.email} to continue.',
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  'Enter the OTP sent to ${widget.email} to continue.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              _gap(),
+              gap(context),
               TextFormField(
                 controller: otp,
+                textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
                   labelText: 'OTP',
                   hintText: 'Enter your OTP',
@@ -86,7 +74,7 @@ class _SignInScreenState extends ConsumerState<VerificationScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              _gap(),
+              gap(context),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -123,7 +111,7 @@ class _SignInScreenState extends ConsumerState<VerificationScreen> {
                   },
                 ),
               ),
-              _gap(),
+              smallGap(context),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

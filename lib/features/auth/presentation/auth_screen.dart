@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/main.dart';
 
@@ -18,9 +19,6 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
 
-  Widget _gap() =>
-      SizedBox(height: MediaQuery.of(context).viewInsets.bottom == 0 ? 16 : 8);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,28 +29,17 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius:
-                    MediaQuery.of(context).viewInsets.bottom == 0 ? 100 : 50,
-                backgroundImage: const AssetImage('assets/images/logo.png'),
+              Text(
+                '${isSignUp ? 'Sign up' : 'Sign in'} to PhotoMe!',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-              _gap(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Welcome to PhotoMe!',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+              smallGap(context),
+              Text(
+                'Enter your email and password to ${isSignUp ? 'create a new account' : 'log to your account'}.',
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  'Enter your email and password to ${isSignUp ? 'create a new account' : 'log to your account'}.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              _gap(),
+              gap(context),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -66,6 +53,7 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
                   }
                   return null;
                 },
+                textInputAction: TextInputAction.next,
                 controller: email,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
@@ -75,7 +63,7 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              _gap(),
+              gap(context),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -86,6 +74,7 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
                   }
                   return null;
                 },
+                textInputAction: TextInputAction.done,
                 controller: password,
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
@@ -107,7 +96,7 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
                   ),
                 ),
               ),
-              _gap(),
+              gap(context),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -147,7 +136,7 @@ class _SignInScreenState extends ConsumerState<AuthScreen> {
                   },
                 ),
               ),
-              _gap(),
+              smallGap(context),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

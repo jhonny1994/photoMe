@@ -15,7 +15,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final routerProvider = Provider((ref) {
   return GoRouter(
-    debugLogDiagnostics: true,
     routes: [
       GoRoute(
         path: '/onboarding',

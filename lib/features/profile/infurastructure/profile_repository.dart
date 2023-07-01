@@ -18,16 +18,16 @@ class ProfileRepository {
 
   final SupabaseClient client;
 
-  Future<Either<String, Profile>> getProfile(String userId) async {
+  Future<Profile> getProfile(String userId) async {
     try {
       final query = await client
           .from('profiles')
           .select<Map<String, dynamic>>()
           .match({'id': userId}).single();
       final profile = Profile.fromMap(query);
-      return right(profile);
+      return profile;
     } catch (e) {
-      return left(e.toString());
+      rethrow;
     }
   }
 

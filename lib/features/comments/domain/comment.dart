@@ -1,8 +1,10 @@
+import 'package:photome/features/profile/domain/profile.dart';
+
 class Comment {
   Comment({
     required this.content,
     required this.postId,
-    required this.profileId,
+    this.profile,
     this.createdAt,
     this.id,
   });
@@ -12,7 +14,7 @@ class Comment {
       createdAt: DateTime.parse(map['created_at'] as String),
       id: map['id'] as int,
       postId: map['post_id'] as int,
-      profileId: map['profile_id'] as String,
+      profile: map['profile'] != null ? map['profile'] as Profile : null,
       content: map['content'] as String,
     );
   }
@@ -21,20 +23,20 @@ class Comment {
   DateTime? createdAt;
   int? id;
   final int postId;
-  final String profileId;
+  Profile? profile;
 
   Comment copyWith({
     DateTime? createdAt,
     int? id,
     int? postId,
-    String? profileId,
+    Profile? profile,
     String? content,
   }) {
     return Comment(
       createdAt: createdAt ?? this.createdAt,
       id: id ?? this.id,
       postId: postId ?? this.postId,
-      profileId: profileId ?? this.profileId,
+      profile: profile ?? this.profile,
       content: content ?? this.content,
     );
   }
@@ -42,7 +44,7 @@ class Comment {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'post_id': postId,
-      'profile_id': profileId,
+      'profile_id': profile!.id,
       'content': content,
     };
   }
