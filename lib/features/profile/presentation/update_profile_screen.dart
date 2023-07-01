@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photome/core/shared/providers.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/profile/infurastructure/profile_repository.dart';
 
@@ -31,12 +32,10 @@ class _SignUpScreenState extends ConsumerState<UpdateProfileScreen> {
     }
   }
 
-  Widget _gap() =>
-      SizedBox(height: MediaQuery.of(context).viewInsets.bottom == 0 ? 32 : 16);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Form(
@@ -47,11 +46,11 @@ class _SignUpScreenState extends ConsumerState<UpdateProfileScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Please complete your profile!',
+                  'Please update your profile!',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
-              _gap(),
+              gap(context),
               CircleAvatar(
                 radius:
                     MediaQuery.of(context).viewInsets.bottom == 0 ? 100 : 50,
@@ -71,7 +70,7 @@ class _SignUpScreenState extends ConsumerState<UpdateProfileScreen> {
                   ),
                 ),
               ),
-              _gap(),
+              gap(context),
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -93,7 +92,7 @@ class _SignUpScreenState extends ConsumerState<UpdateProfileScreen> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              _gap(),
+              gap(context),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

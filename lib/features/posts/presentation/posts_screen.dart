@@ -70,11 +70,20 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                       children: [
                         Row(
                           children: [
-                            AvatarImage(
-                              ref.read(
-                                imageUrlProvider(
-                                  userId: post.profileId,
-                                  fileName: post.profile!.profileImage!,
+                            InkWell(
+                              onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute<Widget>(
+                                  builder: (context) => ProfileScreen(
+                                    profileId: post.profile!.id,
+                                  ),
+                                ),
+                              ),
+                              child: AvatarImage(
+                                ref.read(
+                                  imageUrlProvider(
+                                    userId: post.profileId,
+                                    fileName: post.profile!.profileImage!,
+                                  ),
                                 ),
                               ),
                             ),
@@ -109,7 +118,6 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8),
                         ActionsRow(post: post),
                       ],
                     );
