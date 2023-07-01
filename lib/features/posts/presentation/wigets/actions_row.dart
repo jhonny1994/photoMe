@@ -59,8 +59,10 @@ class ActionsRow extends ConsumerWidget {
                     ? null
                     : () => Navigator.of(context).push(
                           MaterialPageRoute<Widget>(
-                            builder: (context) =>
-                                CommentsScreen(commentsInfo.comments, post),
+                            builder: (context) => CommentsScreen(
+                              post: post,
+                              comments: commentsInfo.comments,
+                            ),
                           ),
                         ),
           ),

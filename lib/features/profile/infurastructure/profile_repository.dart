@@ -18,6 +18,13 @@ class ProfileRepository {
 
   final SupabaseClient client;
 
+  Future<Profile> get currentUserProfile => client
+      .from('profiles')
+      .select<Map<String, dynamic>>()
+      .match({'id': client.auth.currentUser!.id})
+      .single()
+      .then(Profile.fromMap);
+
   Future<Profile> getProfile(String userId) async {
     try {
       final query = await client

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
@@ -135,7 +134,7 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(
-                              image: CachedNetworkImageProvider(
+                              image: NetworkImage(
                                 ref.read(
                                   imageUrlProvider(
                                     userId: post.profileId,

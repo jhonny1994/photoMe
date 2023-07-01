@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:device_preview_screenshot/device_preview_screenshot.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,11 +18,6 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       child: DevicePreview(
-        enabled: false,
-        tools: const [
-          ...DevicePreview.defaultTools,
-          DevicePreviewScreenshot(),
-        ],
         builder: (context) => const MainApp(),
       ),
     ),

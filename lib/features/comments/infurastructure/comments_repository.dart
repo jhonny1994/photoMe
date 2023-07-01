@@ -44,7 +44,7 @@ class CommentsRepository {
 
   Future<Either<String, void>> deleteComment(int commentId) async {
     try {
-      await client.from('comments').delete().eq('id', commentId);
+      await client.from('comments').delete().match({'id': commentId});
       return right(null);
     } catch (e) {
       return left(e.toString());
