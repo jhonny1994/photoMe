@@ -58,7 +58,7 @@ class _AddPostScreenState extends ConsumerState<AddPostScreen> {
                       ),
                       (r) async {
                         final post = Post(
-                          caption: caption.text,
+                          caption: caption.text.trim(),
                           imageUrl: r,
                           profileId: ref.read(userProvider)!.id,
                         );

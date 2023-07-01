@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
@@ -128,20 +129,12 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(post.caption),
-                        Container(
-                          height: 200,
-                          margin: const EdgeInsets.only(top: 8),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                ref.read(
-                                  imageUrlProvider(
-                                    userId: post.profileId,
-                                    fileName: post.imageUrl,
-                                  ),
-                                ),
-                              ),
+                        const SizedBox(height: 8),
+                        CachedNetworkImage(
+                          imageUrl: ref.read(
+                            imageUrlProvider(
+                              userId: post.profileId,
+                              fileName: post.imageUrl,
                             ),
                           ),
                         ),

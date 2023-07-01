@@ -90,11 +90,9 @@ class PostRepository {
   }
 
   Future<void> deletePostImage(String imageUrl) async {
-    final index = imageUrl.indexOf('/');
-    final imageName = imageUrl.substring(0, index);
     await deleteImage(
       bucket: 'posts',
-      imageUrl: imageName,
+      imageUrl: imageUrl,
       client: client,
     );
   }
