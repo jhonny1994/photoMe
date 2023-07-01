@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/core/shared/providers.dart';
+import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/wigets/actions_row.dart';
@@ -61,7 +62,12 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
               : ListView.separated(
                   itemCount: data.length,
                   separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(height: 0);
+                    return Column(
+                      children: [
+                        const Divider(height: 0),
+                        smallGap(context),
+                      ],
+                    );
                   },
                   itemBuilder: (BuildContext context, int index) {
                     final post = data[index];
