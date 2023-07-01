@@ -30,6 +30,29 @@ class PostRepository {
     return postsQuery.map(Post.fromMap).toList();
   }
 
+  Future<List<Post>> getProfilePosts(String profileId) async {
+    final postsQuery = await client
+        .from('posts')
+        .select<List<Map<String, dynamic>>>(
+          'id, caption, created_at, image_url, profiles (id, username, profile_image)',
+        )
+        .match({'profile_id': profileId}).order('created_at');
+    return postsQuery.map(Post.fromMap).toList();
+  }
+
+  Future<int?> getProfilePostsCount(String profileId) async {
+    final postsQuery = await client
+        .from('posts')
+        .select<PostgrestListResponse>(
+          '*',
+          const FetchOptions(
+            count: CountOption.exact,
+          ),
+        )
+        .match({'profile_id': profileId});
+    return postsQuery.count;
+  }
+
   Future<Post> getPost(int postId) async {
     final postsQuery = await client
         .from('posts')

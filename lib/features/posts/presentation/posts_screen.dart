@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/core/shared/providers.dart';
-import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
 import 'package:photome/features/posts/presentation/add_post_screen.dart';
 import 'package:photome/features/posts/presentation/wigets/actions_row.dart';
@@ -25,57 +24,29 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
     final posts = ref.watch(postNotifierProvider);
 
     return Scaffold(
-      drawer: Drawer(
-        width: 250,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            SizedBox(
-              width: 100,
-              child: Image.asset(
-                'assets/images/logo.png',
-              ),
-            ),
-            const Spacer(),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('profile'),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute<Widget>(
-                  builder: (context) => ProfileScreen(
-                    profileId:
-                        ref.read(supabaseClientProvider).auth.currentUser!.id,
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Sign out'),
-              onTap: () => ref.read(authNotifierProvider.notifier).signOut(),
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close),
-            ),
-            const SizedBox(height: 16),
-          ],
-        ),
-      ),
       appBar: AppBar(
         title: const Text('Posts'),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<Widget>(
+              builder: (context) => ProfileScreen(
+                profileId:
+                    ref.read(supabaseClientProvider).auth.currentUser!.id,
+              ),
+            ),
+          ),
+          icon: const Icon(Icons.person),
+        ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.add_a_photo),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute<Widget>(
                 builder: (context) => const AddPostScreen(),
               ),
             ),
-            icon: const Icon(Icons.add_a_photo),
-          )
+          ),
         ],
       ),
       body: posts.when(

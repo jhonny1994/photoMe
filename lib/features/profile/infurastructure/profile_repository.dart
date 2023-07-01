@@ -91,7 +91,7 @@ class ProfileRepository {
     }
   }
 
-  Future<Either<String, int>> getFollowrsCount(String profileId) async {
+  Future<int?> getFollowrsCount(String profileId) async {
     try {
       final query = await client
           .from('followers')
@@ -102,9 +102,9 @@ class ProfileRepository {
             ),
           )
           .eq('profile_id', profileId);
-      return right(query.count ?? 0);
+      return query.count;
     } catch (e) {
-      return left(e.toString());
+      rethrow;
     }
   }
 

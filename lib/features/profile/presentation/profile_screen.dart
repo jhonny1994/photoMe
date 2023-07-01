@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/core/shared/providers.dart';
+import 'package:photome/core/shared/utils.dart';
+import 'package:photome/features/posts/providers.dart';
 import 'package:photome/features/profile/providers.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -13,84 +16,194 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profile = ref.watch(profileProvider(profileId));
+    final posts = ref.read(getProfilePostsProvider(profileId));
+    final followersCount =
+        ref.watch(profileFollowersCountProvider(profileId)).asData?.value ?? 0;
+    final postsCount =
+        ref.watch(getProfilePostsCountProvider(profileId)).asData?.value ?? 0;
+    print(followersCount);
     return Scaffold(
-      appBar: AppBar(),
-      body: profile.when(
-        data: (data) {
-          final isMyProfile =
-              data.id == ref.read(supabaseClientProvider).auth.currentUser!.id;
-          return Column(
-            children: [
-              CircleAvatar(
-                radius: 75,
-                backgroundImage: NetworkImage(
-                  ref.read(
-                    imageUrlProvider(
-                      userId: data.id,
-                      fileName: data.profileImage!,
-                    ),
+      body: SafeArea(
+        child: profile.when(
+          data: (data) {
+            final isMyProfile = data.id ==
+                ref.read(supabaseClientProvider).auth.currentUser!.id;
+            return Column(
+              children: [
+                AppBar(
+                  title: Text(data.username!),
+                  centerTitle: true,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: NetworkImage(
+                              ref.read(
+                                imageUrlProvider(
+                                  userId: data.id,
+                                  fileName: data.profileImage!,
+                                ),
+                              ),
+                            ),
+                          ),
+                          smallGap(context, isHeight: false),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      followersCount.toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    Text(
+                                      'Followers',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      postsCount.toString(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                    Text(
+                                      'Posts',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      smallGap(context),
+                      if (isMyProfile)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: const ContinuousRectangleBorder(),
+                                  foregroundColor: Colors.black,
+                                ),
+                                onPressed: () {},
+                                child: const Text('Edit'),
+                              ),
+                            ),
+                            Expanded(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: const ContinuousRectangleBorder(),
+                                  foregroundColor: Colors.black,
+                                ),
+                                onPressed: () {},
+                                child: const Text('Share'),
+                              ),
+                            ),
+                          ],
+                        )
+                      else
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: const ContinuousRectangleBorder(),
+                                  fixedSize: Size(
+                                    screenSize(context).width * 0.475,
+                                    screenSize(context).height * 0.05,
+                                  ),
+                                  foregroundColor: Colors.black,
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'Follow',
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  shape: const ContinuousRectangleBorder(),
+                                  foregroundColor: Colors.black,
+                                  fixedSize: Size(
+                                    screenSize(context).width * 0.475,
+                                    screenSize(context).height * 0.05,
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: const Text(
+                                  'Share',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      smallGap(context),
+                      Expanded(
+                        child: posts.when(
+                          data: (data) => GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            ),
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: CachedNetworkImageProvider(
+                                        ref.read(
+                                          imageUrlProvider(
+                                            userId:
+                                                data.elementAt(index).profileId,
+                                            fileName:
+                                                data.elementAt(index).imageUrl,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          error: (error, stackTrace) =>
+                              ErrorScreen(message: error.toString()),
+                          loading: () => const LoadingScreen(),
+                        ),
+                      ),
+                    ]),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                '@${data.username!}',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
-              // TODO(jhonny1994):  finish the profile section
-              if (!isMyProfile)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FloatingActionButton.extended(
-                      onPressed: () {},
-                      heroTag: 'follow',
-                      elevation: 0,
-                      label: const Text('Follow'),
-                      icon: const Icon(Icons.person_add_alt_1),
-                    ),
-                    FloatingActionButton.extended(
-                      onPressed: () {},
-                      heroTag: 'mesage',
-                      elevation: 0,
-                      label: const Text('Mesage'),
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      icon: const Icon(Icons.message),
-                    ),
-                  ],
-                )
-              else
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FloatingActionButton.extended(
-                      onPressed: () {},
-                      heroTag: 'edit',
-                      elevation: 0,
-                      label: const Text('Edit profile'),
-                      icon: const Icon(Icons.edit),
-                    ),
-                    FloatingActionButton.extended(
-                      onPressed: () {},
-                      heroTag: 'delete',
-                      elevation: 0,
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      label: const Text('Delete profile'),
-                      icon: const Icon(Icons.delete),
-                    ),
-                  ],
-                ),
-            ],
-          );
-        },
-        error: (error, stackTrace) => ErrorScreen(message: error.toString()),
-        loading: () => const LoadingScreen(),
+              ],
+            );
+          },
+          error: (error, stackTrace) => ErrorScreen(message: error.toString()),
+          loading: () => const LoadingScreen(),
+        ),
       ),
     );
   }

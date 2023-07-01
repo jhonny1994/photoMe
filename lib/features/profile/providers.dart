@@ -6,3 +6,8 @@ final profileProvider =
     FutureProvider.family<Profile, String>((ref, profileId) async {
   return ref.read(profileRepositoryProvider).getProfile(profileId);
 });
+
+final profileFollowersCountProvider =
+    FutureProvider.family<int?, String>((ref, profileId) async {
+  return ref.read(profileRepositoryProvider).getFollowrsCount(profileId);
+});

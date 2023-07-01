@@ -23,6 +23,14 @@ class PostNotifier extends _$PostNotifier {
     return ref.read(postRepositoryProvider).getPost(postId);
   }
 
+  Future<List<Post>> getProfilePost(String profileId) async {
+    return ref.read(postRepositoryProvider).getProfilePosts(profileId);
+  }
+
+  Future<int?> getProfilePostsCount(String profileId) async {
+    return ref.read(postRepositoryProvider).getProfilePostsCount(profileId);
+  }
+
   Future<Either<String, void>> updatePost(Post post) async {
     return ref.read(postRepositoryProvider).updatePost(post);
   }
