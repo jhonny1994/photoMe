@@ -68,8 +68,11 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
                   leading: Image.network(
                     ref.read(
                       imageUrlProvider(
-                        userId: widget.post.profileId,
-                        fileName: widget.post.profile!.profileImage!,
+                        userId: widget.comments.elementAt(index).profile!.id,
+                        fileName: widget.comments
+                            .elementAt(index)
+                            .profile!
+                            .profileImage!,
                       ),
                     ),
                   ),

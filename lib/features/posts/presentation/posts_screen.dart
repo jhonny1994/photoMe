@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:photome/core/presentation/error_screen.dart';
-import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/core/shared/providers.dart';
 import 'package:photome/core/shared/utils.dart';
 import 'package:photome/features/posts/application/posts_notifier.dart';
@@ -22,7 +20,7 @@ class PostsScreen extends ConsumerStatefulWidget {
 class _PostsScreenState extends ConsumerState<PostsScreen> {
   @override
   Widget build(BuildContext context) {
-    final posts = ref.watch(postNotifierProvider);
+    final posts = ref.watch(postNotifierProvider).asData?.value ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -50,88 +48,79 @@ class _PostsScreenState extends ConsumerState<PostsScreen> {
           ),
         ],
       ),
-      body: posts.when(
-        data: (data) => Padding(
-          padding: const EdgeInsets.all(8),
-          child: data.isEmpty
-              ? const Center(
-                  child: Text(
-                    'There are no posts right now, add a post to start!',
-                  ),
-                )
-              : ListView.separated(
-                  itemCount: data.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        const Divider(height: 0),
-                        smallGap(context),
-                      ],
-                    );
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    final post = data[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute<Widget>(
-                                  builder: (context) => ProfileScreen(
-                                    profileId: post.profile!.id,
-                                  ),
-                                ),
-                              ),
-                              child: AvatarImage(
-                                ref.read(
-                                  imageUrlProvider(
-                                    userId: post.profileId,
-                                    fileName: post.profile!.profileImage!,
-                                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: posts.isEmpty
+            ? Container()
+            : ListView.separated(
+                itemCount: posts.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return Column(
+                    children: [
+                      const Divider(height: 0),
+                      smallGap(context),
+                    ],
+                  );
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  final post = posts.elementAt(index);
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute<Widget>(
+                                builder: (context) => ProfileScreen(
+                                  profileId: post.profile!.id,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '@${post.profile!.username}',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  Text(
-                                    timeago.format(post.createdAt!),
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ],
+                            child: AvatarImage(
+                              ref.read(
+                                imageUrlProvider(
+                                  userId: post.profileId,
+                                  fileName: post.profile!.profileImage!,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Text(post.caption),
-                        const SizedBox(height: 8),
-                        CachedNetworkImage(
-                          imageUrl: ref.read(
-                            imageUrlProvider(
-                              userId: post.profileId,
-                              fileName: post.imageUrl,
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '@${post.profile!.username}',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  timeago.format(post.createdAt!),
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(post.caption),
+                      const SizedBox(height: 8),
+                      CachedNetworkImage(
+                        imageUrl: ref.read(
+                          imageUrlProvider(
+                            userId: post.profileId,
+                            fileName: post.imageUrl,
+                          ),
                         ),
-                        ActionsRow(post: post),
-                      ],
-                    );
-                  },
-                ),
-        ),
-        error: (error, stackTrace) => ErrorScreen(message: error.toString()),
-        loading: () => const LoadingScreen(),
+                      ),
+                      ActionsRow(post: post),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }

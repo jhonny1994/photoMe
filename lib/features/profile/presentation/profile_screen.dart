@@ -5,6 +5,7 @@ import 'package:photome/core/presentation/error_screen.dart';
 import 'package:photome/core/presentation/loading_screen.dart';
 import 'package:photome/core/shared/providers.dart';
 import 'package:photome/core/shared/utils.dart';
+import 'package:photome/features/auth/providers.dart';
 import 'package:photome/features/posts/providers.dart';
 import 'package:photome/features/profile/presentation/update_profile_screen.dart';
 import 'package:photome/features/profile/providers.dart';
@@ -33,6 +34,13 @@ class ProfileScreen extends ConsumerWidget {
                 AppBar(
                   title: Text(data.username!),
                   centerTitle: true,
+                  actions: [
+                    IconButton(
+                      onPressed: () =>
+                          ref.read(authNotifierProvider.notifier).signOut(),
+                      icon: const Icon(Icons.logout),
+                    ),
+                  ],
                 ),
                 Expanded(
                   child: Padding(
@@ -96,6 +104,7 @@ class ProfileScreen extends ConsumerWidget {
                           ],
                         ),
                         smallGap(context),
+                        // TODO(jhonny1994): add share and follow
                         if (isMyProfile)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,6 +180,8 @@ class ProfileScreen extends ConsumerWidget {
                             data: (data) => GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 4,
+                                mainAxisSpacing: 4,
                                 crossAxisCount: 3,
                               ),
                               itemCount: data.length,
